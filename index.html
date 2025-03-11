@@ -70,23 +70,22 @@
   <!-- แสดงข้อความโหลด -->
   <div id="loading">กำลังเตรียมโหลดแพลตฟอร์ม...</div>
 
-  <!-- iframe -->
-  <iframe src="https://script.google.com/macros/s/AKfycbx6FZCUPRZxhbyWSLuDCCBQkWS0i9KF3H6Juv3iGxOeL1dBWjNsYbpp_l5VQ9LvmFzM/exec?seree=CREE"></iframe>
-  
-  <script>
-    (function() {
-     
-      let loadingDiv = document.querySelector("#loading");
+<!-- iframe -->
+<iframe id="myFrame" src="https://script.google.com/macros/s/AKfycbx6FZCUPRZxhbyWSLuDCCBQkWS0i9KF3H6Juv3iGxOeL1dBWjNsYbpp_l5VQ9LvmFzM/exec?seree=CREE"></iframe>
 
-      // เมื่อ iframe โหลดเสร็จให้ซ่อนข้อความ "กำลังโหลด..."
-      iframe.onload = function() {
- 
-          loadingDiv.style.display = "none";
-          iframe.style.display = "block";
-      };
+<script>
+  (function() {
+    let loadingDiv = document.querySelector("#loading");
+    let iframe = document.querySelector("#myFrame");
 
-    })();
-  </script>
+    // เมื่อ iframe โหลดเสร็จให้ซ่อนข้อความ "กำลังโหลด..."
+    iframe.onload = function() {
+      loadingDiv.style.display = "none"; // ซ่อนข้อความโหลด
+      iframe.style.display = "block"; // แสดง iframe
+    };
+  })();
+</script>
+
 
 </body>
 </html>
