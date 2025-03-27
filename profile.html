@@ -74,50 +74,44 @@
   </style>
 </head>
 <body>
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เรียกใช้ Google Apps Script API</title>
-</head>
-<body>
-    <h1>ข้อมูลจาก Google Apps Script</h1>
-    <pre id="data-output">กำลังโหลดข้อมูล...</pre>
+  <!-- แสดงข้อความโหลด -->
+  <div id="loading">กำลังเตรียมโหลดแพลตฟอร์ม...</div>
 
-    <script>
-        async function fetchData() {
-            const scriptURL = "https://script.google.com/macros/s/AKfycbx6FZCUPRZxhbyWSLuDCCBQkWS0i9KF3H6Juv3iGxOeL1dBWjNsYbpp_l5VQ9LvmFzM/exec"; // แทนที่ YOUR_SCRIPT_ID ด้วย ID ของสคริปต์
-            const params = new URLSearchParams({ format: 'json' }); // พารามิเตอร์สำหรับ JSON
-            
-            try {
-                const response = await fetch(`${scriptURL}?${params.toString()}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                });
+  <!-- iframe -->
+  <iframe id="myFrame" src=""></iframe>
+  
+  <script>
+    (function() {
+      let link = window.location.href;
+      let link1 = decodeURIComponent(link);
+      let linkParts = link1.split("?");
+      let params = linkParts.length > 1 ? linkParts[1].split("&")[0] : "";
+      let cacheBust = new Date().getTime();
+      let link3 = "https://script.google.com/macros/s/AKfycbx6FZCUPRZxhbyWSLuDCCBQkWS0i9KF3H6Juv3iGxOeL1dBWjNsYbpp_l5VQ9LvmFzM/exec?seree=" 
+                    + params + "&cb=" + cacheBust;
 
-                if (response.ok) {
-                    const data = await response.json();
-                    document.getElementById("data-output").textContent = JSON.stringify(data, null, 2);
-                } else {
-                    document.getElementById("data-output").textContent = "ไม่สามารถโหลดข้อมูลได้!";
-                }
-            } catch (error) {
-                console.error("เกิดข้อผิดพลาด:", error);
-                document.getElementById("data-output").textContent = "เกิดข้อผิดพลาดในการโหลดข้อมูล!";
-            }
-        }
+      console.log(link3);
 
-        // เรียกใช้ฟังก์ชัน fetchData เมื่อโหลดหน้า
-        fetchData();
-    </script>
-</body>
-</html>
+      let iframe = document.querySelector("#myFrame");
+      let loadingDiv = document.querySelector("#loading");
 
+      // เมื่อ iframe โหลดเสร็จให้ซ่อนข้อความ "กำลังโหลด..."
+      iframe.onload = function() {
+       
+        // setTimeout(function () {
+        //   loadingDiv.style.display = "none";
+        // }, 1500);
+       
+          loadingDiv.style.display = "none";
+          iframe.style.display = "block";
+      };
 
-
+      // ตั้งค่า URL ให้ iframe โหลด
+      if (!link.includes("sereecar.github.io/index.html")) {
+          iframe.setAttribute("src", link3);
+      }
+    })();
+  </script>
 
 </body>
 </html>
