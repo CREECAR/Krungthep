@@ -111,8 +111,10 @@
         clearTimeout(timeout); // เคลียร์ Timeout ถ้าตอบกลับทันเวลา
 
         if (response.ok) {
+            const data = await response.json(); // ดึงข้อมูล JSON
             console.log("✅ API Ready, loading iframe...");
 
+            // แสดงข้อมูลใน iframe
             setTimeout(() => {
                 loadingDiv.style.display = "none"; // ซ่อน Loading
                 iframe.style.display = "block"; // แสดง iframe
@@ -127,8 +129,8 @@
         loadingDiv.textContent = "⏳ การเชื่อมต่อหมดเวลา หรือ API ไม่ตอบสนอง!";
     }
 })();
-
 </script>
+
 
 
 </body>
