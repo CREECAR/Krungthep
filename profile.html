@@ -80,38 +80,43 @@
   <!-- iframe -->
   <iframe id="myFrame" src=""></iframe>
   
-  <script>
-    (function() {
-      let link = window.location.href;
-      let link1 = decodeURIComponent(link);
-      let linkParts = link1.split("?");
-      let params = linkParts.length > 1 ? linkParts[1].split("&")[0] : "";
-      let cacheBust = new Date().getTime();
-      let link3 = "https://script.google.com/macros/s/AKfycbx6FZCUPRZxhbyWSLuDCCBQkWS0i9KF3H6Juv3iGxOeL1dBWjNsYbpp_l5VQ9LvmFzM/exec?seree=" 
-                    + params + "&cb=" + cacheBust;
+<script>
+    (async function() {
+        let link = window.location.href;
+        let link1 = decodeURIComponent(link);
+        let linkParts = link1.split("?");
+        let params = linkParts.length > 1 ? linkParts[1].split("&")[0] : "";
+        let cacheBust = new Date().getTime();
+        let scriptURL = "https://script.google.com/macros/s/AKfycbx6FZCUPRZxhbyWSLuDCCBQkWS0i9KF3H6Juv3iGxOeL1dBWjNsYbpp_l5VQ9LvmFzM/exec?seree=" 
+                        + params + "&cb=" + cacheBust;
 
-      console.log(link3);
+        console.log("🔹 Checking API:", scriptURL);
 
-      let iframe = document.querySelector("#myFrame");
-      let loadingDiv = document.querySelector("#loading");
+        let iframe = document.querySelector("#myFrame");
+        let loadingDiv = document.querySelector("#loading");
 
-      // เมื่อ iframe โหลดเสร็จให้ซ่อนข้อความ "กำลังโหลด..."
-      iframe.onload = function() {
-       
-        // setTimeout(function () {
-        //   loadingDiv.style.display = "none";
-        // }, 1500);
-       
-          loadingDiv.style.display = "none";
-          iframe.style.display = "block";
-      };
-
-      // ตั้งค่า URL ให้ iframe โหลด
-      if (!link.includes("sereecar.github.io/index.html")) {
-          iframe.setAttribute("src", link3);
-      }
+        try {
+            // เช็คว่า API โหลดเสร็จแล้วก่อนเปิด iframe
+            let response = await fetch(scriptURL, { method: "GET", cache: "no-store" });
+            if (response.ok) {
+                console.log("✅ API Ready, loading iframe...");
+                
+                setTimeout(() => {
+                    loadingDiv.style.display = "none"; // ซ่อน loading
+                    iframe.style.display = "block"; // แสดง iframe
+                    iframe.setAttribute("src", scriptURL);
+                }, 500); // ตั้งเวลาเล็กน้อยให้แน่ใจว่าข้อมูลโหลดแล้ว
+            } else {
+                console.error("❌ API Error:", response.status);
+                loadingDiv.textContent = "ไม่สามารถโหลดข้อมูลได้!";
+            }
+        } catch (error) {
+            console.error("❌ Fetch Error:", error);
+            loadingDiv.textContent = "ไม่สามารถโหลดข้อมูลได้!";
+        }
     })();
-  </script>
+</script>
+
 
 </body>
 </html>
