@@ -81,40 +81,53 @@
   <iframe id="myFrame" src=""></iframe>
   
 <script>
-    (async function() {
-        let link = window.location.href;
-        let link1 = decodeURIComponent(link);
-        let linkParts = link1.split("?");
-        let params = linkParts.length > 1 ? linkParts[1].split("&")[0] : "";
-        let cacheBust = new Date().getTime();
-        let scriptURL = "https://script.google.com/macros/s/AKfycbx6FZCUPRZxhbyWSLuDCCBQkWS0i9KF3H6Juv3iGxOeL1dBWjNsYbpp_l5VQ9LvmFzM/exec?seree=" 
-                        + params + "&cb=" + cacheBust;
+(async function() {
+    let link = window.location.href;
+    let link1 = decodeURIComponent(link);
+    let linkParts = link1.split("?");
+    let params = linkParts.length > 1 ? linkParts[1].split("&")[0] : "";
+    let cacheBust = new Date().getTime();
+    let scriptURL = "https://script.google.com/macros/s/AKfycbx6FZCUPRZxhbyWSLuDCCBQkWS0i9KF3H6Juv3iGxOeL1dBWjNsYbpp_l5VQ9LvmFzM/exec?seree=" 
+                    + params + "&cb=" + cacheBust;
 
-        console.log("🔹 Checking API:", scriptURL);
+    console.log("🔹 Checking API:", scriptURL);
 
-        let iframe = document.querySelector("#myFrame");
-        let loadingDiv = document.querySelector("#loading");
+    let iframe = document.querySelector("#myFrame");
+    let loadingDiv = document.querySelector("#loading");
 
-        try {
-            // เช็คว่า API โหลดเสร็จแล้วก่อนเปิด iframe
-            let response = await fetch(scriptURL, { method: "GET", cache: "no-store" });
-            if (response.ok) {
-                console.log("✅ API Ready, loading iframe...");
-                
-                setTimeout(() => {
-                    loadingDiv.style.display = "none"; // ซ่อน loading
-                    iframe.style.display = "block"; // แสดง iframe
-                    iframe.setAttribute("src", scriptURL);
-                }, 500); // ตั้งเวลาเล็กน้อยให้แน่ใจว่าข้อมูลโหลดแล้ว
-            } else {
-                console.error("❌ API Error:", response.status);
-                loadingDiv.textContent = "ไม่สามารถโหลดข้อมูลได้!";
+    try {
+        let controller = new AbortController();
+        let timeout = setTimeout(() => controller.abort(), 8000); // ตั้ง Timeout 8 วินาที
+
+        let response = await fetch(scriptURL, {
+            method: "GET",
+            cache: "no-store",
+            signal: controller.signal,  // ใช้ AbortController
+            headers: {
+                "Content-Type": "application/json"
             }
-        } catch (error) {
-            console.error("❌ Fetch Error:", error);
-            loadingDiv.textContent = "ไม่สามารถโหลดข้อมูลได้!";
+        });
+
+        clearTimeout(timeout); // เคลียร์ Timeout ถ้าตอบกลับทันเวลา
+
+        if (response.ok) {
+            console.log("✅ API Ready, loading iframe...");
+
+            setTimeout(() => {
+                loadingDiv.style.display = "none"; // ซ่อน Loading
+                iframe.style.display = "block"; // แสดง iframe
+                iframe.setAttribute("src", scriptURL);
+            }, 500); // ดีเลย์เล็กน้อยให้โหลดทัน
+        } else {
+            console.error("❌ API Error:", response.status);
+            loadingDiv.textContent = "❌ ไม่สามารถโหลดข้อมูลได้! (API Error)";
         }
-    })();
+    } catch (error) {
+        console.error("❌ Fetch Error:", error);
+        loadingDiv.textContent = "⏳ การเชื่อมต่อหมดเวลา หรือ API ไม่ตอบสนอง!";
+    }
+})();
+
 </script>
 
 
