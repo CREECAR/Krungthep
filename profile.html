@@ -74,62 +74,48 @@
   </style>
 </head>
 <body>
-  <!-- แสดงข้อความโหลด -->
-  <div id="loading">กำลังเตรียมโหลดแพลตฟอร์ม...</div>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เรียกใช้ Google Apps Script API</title>
+</head>
+<body>
+    <h1>ข้อมูลจาก Google Apps Script</h1>
+    <pre id="data-output">กำลังโหลดข้อมูล...</pre>
 
-  <!-- iframe -->
-  <iframe id="myFrame" src=""></iframe>
-  
-<script>
-(async function() {
-    let link = window.location.href;
-    let link1 = decodeURIComponent(link);
-    let linkParts = link1.split("?");
-    let params = linkParts.length > 1 ? linkParts[1].split("&")[0] : "";
-    let cacheBust = new Date().getTime();
-    let scriptURL = "https://script.google.com/macros/s/AKfycbx6FZCUPRZxhbyWSLuDCCBQkWS0i9KF3H6Juv3iGxOeL1dBWjNsYbpp_l5VQ9LvmFzM/exec?seree=" 
-                    + params + "&cb=" + cacheBust;
+    <script>
+        async function fetchData() {
+            const scriptURL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec"; // แทนที่ YOUR_SCRIPT_ID ด้วย ID ของสคริปต์
+            const params = new URLSearchParams({ format: 'json' }); // พารามิเตอร์สำหรับ JSON
+            
+            try {
+                const response = await fetch(`${scriptURL}?${params.toString()}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
 
-    console.log("🔹 Checking API:", scriptURL);
-
-    let iframe = document.querySelector("#myFrame");
-    let loadingDiv = document.querySelector("#loading");
-
-    try {
-        let controller = new AbortController();
-        let timeout = setTimeout(() => controller.abort(), 8000); // ตั้ง Timeout 8 วินาที
-
-        let response = await fetch(scriptURL, {
-            method: "GET",
-            cache: "no-store",
-            signal: controller.signal,  // ใช้ AbortController
-            headers: {
-                "Content-Type": "application/json"
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById("data-output").textContent = JSON.stringify(data, null, 2);
+                } else {
+                    document.getElementById("data-output").textContent = "ไม่สามารถโหลดข้อมูลได้!";
+                }
+            } catch (error) {
+                console.error("เกิดข้อผิดพลาด:", error);
+                document.getElementById("data-output").textContent = "เกิดข้อผิดพลาดในการโหลดข้อมูล!";
             }
-        });
-
-        clearTimeout(timeout); // เคลียร์ Timeout ถ้าตอบกลับทันเวลา
-
-        if (response.ok) {
-            const data = await response.json(); // ดึงข้อมูล JSON
-            console.log("✅ API Ready, loading iframe...");
-
-            // แสดงข้อมูลใน iframe
-            setTimeout(() => {
-                loadingDiv.style.display = "none"; // ซ่อน Loading
-                iframe.style.display = "block"; // แสดง iframe
-                iframe.setAttribute("src", scriptURL);
-            }, 500); // ดีเลย์เล็กน้อยให้โหลดทัน
-        } else {
-            console.error("❌ API Error:", response.status);
-            loadingDiv.textContent = "❌ ไม่สามารถโหลดข้อมูลได้! (API Error)";
         }
-    } catch (error) {
-        console.error("❌ Fetch Error:", error);
-        loadingDiv.textContent = "⏳ การเชื่อมต่อหมดเวลา หรือ API ไม่ตอบสนอง!";
-    }
-})();
-</script>
+
+        // เรียกใช้ฟังก์ชัน fetchData เมื่อโหลดหน้า
+        fetchData();
+    </script>
+</body>
+</html>
+
 
 
 
