@@ -25,42 +25,21 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
 
-  <head>
-    <!-- เร่งการเชื่อมต่อ -->
-    <link rel="preconnect" href="https://script.google.com">
-    <link rel="dns-prefetch" href="https://script.google.com">
 
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-        }
-        iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>กำลังโหลด...</title>
+    <script>
+        (function() {
+            let params = window.location.search ? window.location.search.split("?")[1].split("&")[0] : "";
+            let url = "https://script.google.com/macros/s/AKfycbx6FZCUPRZxhbyWSLuDCCBQkWS0i9KF3H6Juv3iGxOeL1dBWjNsYbpp_l5VQ9LvmFzM/exec?seree=" + params;
+            
+            // รีไดเร็กต์ไปที่หน้า Google Apps Script ทันที
+            window.location.href = url;
+        })();
+    </script>
 </head>
 <body>
-
-<script>
-    (function() {
-        let params = window.location.search ? window.location.search.split("?")[1].split("&")[0] : "";
-        let url = "https://script.google.com/macros/s/AKfycbx6FZCUPRZxhbyWSLuDCCBQkWS0i9KF3H6Juv3iGxOeL1dBWjNsYbpp_l5VQ9LvmFzM/exec?seree=" + params;
-
-        // โหลด URL ล่วงหน้า
-        fetch(url, { method: "GET", cache: "no-cache" });
-
-        // ใช้ document.write เพื่อโหลด iframe ทันที
-        document.write('<iframe src="' + url + '"></iframe>');
-    })();
-</script>
-
+    <p>กำลังโหลด...</p>
 </body>
 </html>
+
