@@ -58,8 +58,8 @@
             position: fixed; /* เปลี่ยนเป็น fixed เพื่อให้ยึดติด */
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw; /* ใช้ viewport width */
+            height: 100vh; /* ใช้ viewport height */
             border: 0;
             display: none;
             z-index: 1000; /* ทำให้ iframe อยู่เหนือข้อความโหลด */
@@ -95,8 +95,6 @@
             }
         })();
     </script>
-
-
 </body>
 </html>
 
