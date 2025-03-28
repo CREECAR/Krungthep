@@ -49,17 +49,18 @@
 </head>
 <body>
 
-    <!-- โหลด iframe ทันที -->
-    <iframe id="myFrame"></iframe>
-
-    <script>
-        // ดึงค่าพารามิเตอร์ให้เร็วที่สุด
+<script>
+    (function() {
         let params = window.location.search ? window.location.search.split("?")[1].split("&")[0] : "";
         let url = "https://script.google.com/macros/s/AKfycbx6FZCUPRZxhbyWSLuDCCBQkWS0i9KF3H6Juv3iGxOeL1dBWjNsYbpp_l5VQ9LvmFzM/exec?seree=" + params;
 
-        // กำหนด src ทันที
-        document.getElementById("myFrame").src = url;
-    </script>
+        // โหลด URL ล่วงหน้า
+        fetch(url, { method: "GET", cache: "no-cache" });
+
+        // ใช้ document.write เพื่อโหลด iframe ทันที
+        document.write('<iframe src="' + url + '"></iframe>');
+    })();
+</script>
 
 </body>
 </html>
