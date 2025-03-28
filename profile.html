@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,92 +25,77 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
 
-  <head>
-    <!-- เร่งการเชื่อมต่อกับ Apps Script -->
-    <link rel="preconnect" href="https://your-appscrip-url.com">
-    <link rel="dns-prefetch" href="https://your-appscrip-url.com">
+</head>
+<!-- เร่งการเชื่อมต่อกับ Apps Script -->
+    <link rel="preconnect" href="https://script.google.com">
+    <link rel="dns-prefetch" href="https://script.google.com">
 
     <!-- ปรับให้ iframe โหลดเร็วขึ้น -->
     <style>
-        iframe {
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; /* ปิดการเลื่อนของเบราว์เซอร์ */
+        }
+        
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 100vh;
-            border: none;
-            loading: lazy; /* โหลด iframe แบบ Lazy Load */
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2d7cff;
+            z-index: 999; /* ทำให้ข้อความโหลดอยู่ด้านบนสุด */
+        }
+        
+        #myFrame {
+            position: fixed; /* เปลี่ยนเป็น fixed เพื่อให้ยึดติด */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: none;
+            z-index: 1000; /* ทำให้ iframe อยู่เหนือข้อความโหลด */
         }
     </style>
-</head>
- 
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-    }
-    #loading {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      font-weight: bold;
-      color: #2d7cff;
-    }
-    #myFrame {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-      display: none;
-    }
-  </style>
-</head>
+
 <body>
-  <!-- แสดงข้อความโหลด -->
-  <div id="loading">กำลังเตรียมโหลดแพลตฟอร์ม...</div>
-
-  <!-- iframe -->
-  <iframe id="myFrame" src=""></iframe>
+    <div id="loading">กำลังเตรียมโหลดแพลตฟอร์ม...</div>
+    <iframe id="myFrame" src=""></iframe>
   
-  <script>
-    (function() {
-      let link = window.location.href;
-      let link1 = decodeURIComponent(link);
-      let linkParts = link1.split("?");
-      let params = linkParts.length > 1 ? linkParts[1].split("&")[0] : "";
-      let cacheBust = new Date().getTime();
-      let link3 = "https://script.google.com/macros/s/AKfycbx6FZCUPRZxhbyWSLuDCCBQkWS0i9KF3H6Juv3iGxOeL1dBWjNsYbpp_l5VQ9LvmFzM/exec?seree=" 
-                    + params + "&cb=" + cacheBust;
+    <script>
+        (function() {
+            let link = window.location.href;
+            let link1 = decodeURIComponent(link);
+            let linkParts = link1.split("?"); 
+            let params = linkParts.length > 1 ? linkParts[1].split("&")[0] : "";
+            let cacheBust = new Date().getTime();
+            let link3 = "https://script.google.com/macros/s/AKfycbx6FZCUPRZxhbyWSLuDCCBQkWS0i9KF3H6Juv3iGxOeL1dBWjNsYbpp_l5VQ9LvmFzM/exec?seree=" 
+                         + params + "&cb=" + cacheBust;
 
-      console.log(link3);
+            console.log(link3);
 
-      let iframe = document.querySelector("#myFrame");
-      let loadingDiv = document.querySelector("#loading");
+            let iframe = document.querySelector("#myFrame");
+            let loadingDiv = document.querySelector("#loading");
 
-      // เมื่อ iframe โหลดเสร็จให้ซ่อนข้อความ "กำลังโหลด..."
-      iframe.onload = function() {
-       
-        // setTimeout(function () {
-        //   loadingDiv.style.display = "none";
-        // }, 1500);
-       
-          loadingDiv.style.display = "none";
-          iframe.style.display = "block";
-      };
+            iframe.onload = function() {
+                loadingDiv.style.display = "none";
+                iframe.style.display = "block";
+            };
 
-      // ตั้งค่า URL ให้ iframe โหลด
-      if (!link.includes("sereecar.github.io/index.html")) {
-          iframe.setAttribute("src", link3);
-      }
-    })();
-  </script>
+            if (!link.includes("sereecar.github.io/index.html")) {
+                iframe.setAttribute("src", link3);
+            }
+        })();
+    </script>
 
 </body>
 </html>
