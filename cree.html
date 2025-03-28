@@ -25,7 +25,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
 
-<head>
+</head>
     <!-- เร่งการเชื่อมต่อกับ Apps Script -->
     <link rel="preconnect" href="https://script.google.com">
     <link rel="dns-prefetch" href="https://script.google.com">
@@ -56,17 +56,17 @@
         }
         
         #myFrame {
-            position: fixed; /* เปลี่ยนเป็น fixed เพื่อให้ยึดติด */
+            position: fixed; /* ใช้ fixed เพื่อให้ iframe ยึดติด */
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-            display: none;
+            width: 100vw; /* ใช้ viewport width */
+            height: 100vh; /* ใช้ viewport height */
+            border: none; /* ไม่แสดงกรอบ */
+            display: none; /* ซ่อน iframe เริ่มต้น */
             z-index: 1000; /* ทำให้ iframe อยู่เหนือข้อความโหลด */
         }
     </style>
-</head>
+
 <body>
     <div id="loading">กำลังเตรียมโหลดแพลตฟอร์ม...</div>
     <iframe id="myFrame" src=""></iframe>
