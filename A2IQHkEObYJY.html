@@ -7,22 +7,64 @@
   <title>TOYOTA</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content=" 689,000 /2022 ">
-  <link rel="icon" href="https://lh5.googleusercontent.com/d/1IrwFLVpK2mth31sf_XhGIeS6Mm5xbt-B">
+  <link rel="icon" style="width: 100%" href="https://lh5.googleusercontent.com/d/1yRi_GNMcuYWbtRqeoE-9yuveKEg-lrv_" data-rh="true">
   <meta property="og:image" content="https://lh5.googleusercontent.com/d/1W2Dukp7BOHW0X69YnSpXt91bpvOrcU59">
 
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
 
-  <style>
-    html, body { margin: 0; padding: 0; height: 100%; }
-    #loading { position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(255, 255, 255, 0.8); display: flex; align-items: center;
-      justify-content: center; font-size: 18px; font-weight: bold; color: #2d7cff; }
-    #myFrame { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; display: none; }
-  </style>
+ <!-- ??????????????????? Apps Script -->
+    <link rel="preconnect" href="https://script.google.com">
+    <link rel="dns-prefetch" href="https://script.google.com">
+ 
 </head>
-<body>
+
+    <!-- ??????? iframe ???????????? -->
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; /* ?????????????????????????? */
+        }
+
+         iframe {
+            width: 100%;
+            height: 100vh;
+            border: none;
+            loading: lazy; /* ???? iframe ??? Lazy Load */
+        }
+        
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2d7cff;
+            z-index: 999; /* ????????????????????????????? */
+        }
+        
+        #myFrame {
+            position: fixed; /* ??????????? fixed ?????????????? */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: none;
+            z-index: 1000; /* ????? iframe ???????????????????? */
+        }
+    </style>
+ 
+ <body>
   <div id="loading">Loading platform...</div>
   <iframe id="myFrame" src=""></iframe>
   
